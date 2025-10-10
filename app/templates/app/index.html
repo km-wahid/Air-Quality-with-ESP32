@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Quality Monitor | Breathe Safe</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .floating-particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero-section {
+            position: relative;
+            z-index: 1;
+            padding: 4rem 0;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .air-icon {
+            font-size: 4rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: float-icon 3s ease-in-out infinite;
+        }
+        
+        @keyframes float-icon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .link-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .link-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+            color: white;
+        }
+        
+        .awareness-card {
+            border-left: 4px solid #667eea;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .awareness-card:hover {
+            border-left-width: 8px;
+            padding-left: 2rem;
+        }
+        
+        .badge-aqi {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .good { background: #10b981; color: white; }
+        .moderate { background: #f59e0b; color: white; }
+        .unhealthy { background: #ef4444; color: white; }
+    </style>
+</head>
+<body>
+    <!-- Floating Particles Background -->
+    <div class="floating-particles" id="particles"></div>
+    
+    <div class="container hero-section">
+        <!-- Header -->
+        <div class="text-center mb-5">
+            <i class="fas fa-wind air-icon"></i>
+            <h1 class="text-white fw-bold display-3 mb-3">Air Quality Monitor</h1>
+            <p class="text-white fs-5">Real-time monitoring for a healthier tomorrow</p>
+        </div>
+        
+        <!-- Stats Overview -->
+        <div class="row mb-5 g-4">
+            <div class="col-md-4">
+                <div class="stat-card text-center pulse">
+                    <i class="fas fa-lungs fa-3x mb-3"></i>
+                    <h3 class="fw-bold">3.2M</h3>
+                    <p class="mb-0">Lives Protected Daily</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card text-center pulse" style="animation-delay: 0.2s;">
+                    <i class="fas fa-globe-americas fa-3x mb-3"></i>
+                    <h3 class="fw-bold">150+</h3>
+                    <p class="mb-0">Cities Monitored</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card text-center pulse" style="animation-delay: 0.4s;">
+                    <i class="fas fa-chart-line fa-3x mb-3"></i>
+                    <h3 class="fw-bold">24/7</h3>
+                    <p class="mb-0">Real-time Updates</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Dashboard Links -->
+        <div class="glass-card p-5 mb-5">
+            <h2 class="fw-bold mb-4 text-center"><i class="fas fa-tachometer-alt me-2"></i>Monitoring Dashboards</h2>
+            <div class="row g-4">
+                <div class="col-md-6 text-center">
+                    <div class="p-4">
+                        <i class="fas fa-database fa-4x mb-3 text-primary"></i>
+                        <h4 class="fw-bold mb-3">InfluxDB Analytics</h4>
+                        <p class="text-muted mb-4">Access detailed time-series data and historical trends</p>
+                        <a href="http://localhost:8086" target="_blank" class="link-btn">
+                            <i class="fas fa-external-link-alt me-2"></i>Open InfluxDB UI
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center">
+                    <div class="p-4">
+                        <i class="fas fa-chart-area fa-4x mb-3 text-success"></i>
+                        <h4 class="fw-bold mb-3">Grafana Visualization</h4>
+                        <p class="text-muted mb-4">View real-time graphs and customizable dashboards</p>
+                        <a href="http://localhost:3000" target="_blank" class="link-btn">
+                            <i class="fas fa-external-link-alt me-2"></i>Open Grafana UI
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Air Quality Awareness Section -->
+        <div class="glass-card p-5 mb-5">
+            <h2 class="fw-bold mb-4"><i class="fas fa-leaf me-2"></i>Air Quality Awareness</h2>
+            
+            <div class="row mb-4">
+                <div class="col-md-4 text-center mb-3">
+                    <div class="badge-aqi good mb-2">0-50 Good</div>
+                    <p class="small">Air quality is satisfactory</p>
+                </div>
+                <div class="col-md-4 text-center mb-3">
+                    <div class="badge-aqi moderate mb-2">51-100 Moderate</div>
+                    <p class="small">Acceptable for most people</p>
+                </div>
+                <div class="col-md-4 text-center mb-3">
+                    <div class="badge-aqi unhealthy mb-2">101+ Unhealthy</div>
+                    <p class="small">Health effects may occur</p>
+                </div>
+            </div>
+            
+            <div class="awareness-card">
+                <h5 class="fw-bold"><i class="fas fa-lightbulb text-warning me-2"></i>Did You Know?</h5>
+                <p class="mb-0">Air pollution is responsible for approximately 7 million premature deaths worldwide each year. Monitoring air quality helps us make informed decisions about our outdoor activities.</p>
+            </div>
+            
+            <div class="awareness-card">
+                <h5 class="fw-bold"><i class="fas fa-home text-info me-2"></i>Indoor Air Quality</h5>
+                <p class="mb-0">Indoor air can be 2-5 times more polluted than outdoor air. Regular ventilation, air purifiers, and houseplants can significantly improve your indoor environment.</p>
+            </div>
+            
+            <div class="awareness-card">
+                <h5 class="fw-bold"><i class="fas fa-heart text-danger me-2"></i>Health Impact</h5>
+                <p class="mb-0">Poor air quality affects respiratory and cardiovascular health. Children, elderly, and those with pre-existing conditions are most vulnerable. Stay informed and take precautions on high pollution days.</p>
+            </div>
+            
+            <div class="awareness-card">
+                <h5 class="fw-bold"><i class="fas fa-seedling text-success me-2"></i>What You Can Do</h5>
+                <ul class="mb-0">
+                    <li>Use public transportation or carpool</li>
+                    <li>Conserve energy at home and work</li>
+                    <li>Plant trees and support green spaces</li>
+                    <li>Avoid burning wood or trash</li>
+                    <li>Monitor air quality before outdoor activities</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="text-center text-white pb-4">
+            <p class="mb-2"><i class="fas fa-heart text-danger"></i> Breathe Clean, Live Healthy</p>
+            <p class="small opacity-75">Monitor • Analyze • Protect</p>
+        </div>
+    </div>
+    
+    <script>
+        // Create floating particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            const size = Math.random() * 60 + 20;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
