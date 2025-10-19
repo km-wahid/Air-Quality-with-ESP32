@@ -1,6 +1,6 @@
 # 🌐 IoT-Based Air Quality Monitoring System
 
-This project is a **real-time IoT Air Quality Monitoring System** that collects sensor data from an ESP32 and visualizes it through **Grafana** using **InfluxDB** as the time-series database.  
+This project is a **real-time IoT Air Quality Monitoring System** that collects sensor data from an ESP32 and visualizes it through **Grafana** using **InfluxDB** as the time-series database.
 It provides live dashboards and historical analysis for environmental data such as temperature, humidity, and air quality index.
 
 > 🟢 **Note:** The entire system (InfluxDB + Grafana + Django backend) is **deployed on AWS EC2**, allowing remote access and scalability for multiple IoT devices.
@@ -9,8 +9,8 @@ It provides live dashboards and historical analysis for environmental data such 
 
 ## 🚀 System Overview
 
-The system enables **continuous monitoring** of air quality through an IoT device (ESP32) equipped with sensors.  
-Data is sent over Wi-Fi to a **cloud-hosted InfluxDB instance**, which stores all readings for further visualization in **Grafana** dashboards.  
+The system enables **continuous monitoring** of air quality through an IoT device (ESP32) equipped with sensors.
+Data is sent over Wi-Fi to a **cloud-hosted InfluxDB instance**, which stores all readings for further visualization in **Grafana** dashboards.
 The backend is hosted on **AWS**, ensuring high availability and secure connectivity between devices and the dashboard.
 
 ---
@@ -18,39 +18,46 @@ The backend is hosted on **AWS**, ensuring high availability and secure connecti
 ## 🧠 How the System Works
 
 ### 1. **Data Collection (ESP32)**
-- The ESP32 board reads sensor data from modules like:
-  - **DHT11/DHT22** → Temperature and Humidity
-  - **MQ135** → Air Quality / Gas concentration
-- The sensor readings are converted into structured JSON data.
-- The ESP32 connects to Wi-Fi and sends this data to the AWS-hosted InfluxDB endpoint.
+
+* The ESP32 board reads sensor data from modules like:
+
+  * **DHT11/DHT22** → Temperature and Humidity
+  * **MQ135** → Air Quality / Gas concentration
+* The sensor readings are converted into structured JSON data.
+* The ESP32 connects to Wi-Fi and sends this data to the AWS-hosted InfluxDB endpoint.
 
 ### 2. **Data Transmission**
-- Data is sent using the **HTTP POST** or **MQTT** protocol to the AWS server’s InfluxDB endpoint.
-- Example data payload:
-  ```json
-  {
-    "temperature": 27.4,
-    "humidity": 56.3,
-    "air_quality": 135
-  }
-3. Data Storage (InfluxDB on AWS)
-The incoming data is written to InfluxDB, a time-series database running on an AWS EC2 instance.
 
+* Data is sent using the **HTTP POST** or **MQTT** protocol to the AWS server’s InfluxDB endpoint.
+* Example data payload:
+
+```json
+{
+  "temperature": 27.4,
+  "humidity": 56.3,
+  "air_quality": 135
+}
+```
+
+### 3. **Data Storage (InfluxDB on AWS)**
+
+The incoming data is written to **InfluxDB**, a time-series database running on an AWS EC2 instance.
 Each sensor reading is stored with a timestamp, enabling time-based querying and trend analysis.
 
-4. Data Visualization (Grafana on AWS)
-Grafana, hosted on the same AWS EC2 server, connects to InfluxDB as a data source.
+### 4. **Data Visualization (Grafana on AWS)**
 
+Grafana, hosted on the same AWS EC2 server, connects to InfluxDB as a data source.
 Dashboards are created to visualize:
 
-Real-time temperature, humidity, and air quality levels
+* Real-time temperature, humidity, and air quality levels
+* Historical trends and variations
+* Threshold-based color-coded gauges (e.g., green, yellow, red)
 
-Historical trends and variations
+---
 
-Threshold-based color-coded gauges (e.g., green, yellow, red)
+## 🏗️ System Architecture
 
-🏗️ System Architecture
-
+```text
                 ┌────────────────────────────┐
                 │        Sensor Node         │
                 │  (ESP32 + MQ135 + DHT22)  │
@@ -74,47 +81,57 @@ Threshold-based color-coded gauges (e.g., green, yellow, red)
         │  │   (Data Visualization Interface)   │  │
         │  └────────────────────────────────────┘  │
         └──────────────────────────────────────────┘
-☁️ Cloud Deployment:
+```
+
+☁️ **Cloud Deployment:**
 The entire backend stack (InfluxDB + Grafana + Django API) runs on an AWS EC2 instance, allowing ESP32 devices to push data remotely and Grafana dashboards to be accessed via a public IP.
 
-📊 Dashboard Example
+---
+
+## 📊 Dashboard Example
+
 A Grafana dashboard can display:
 
-Live gauges for Temperature, Humidity, Air Quality
+* Live gauges for Temperature, Humidity, Air Quality
+* Historical graphs showing hourly or daily variation
+* Color-coded alert zones (e.g., Green < 20°C, Yellow < 30°C, Red > 30°C)
+* Real-time data refresh using the InfluxDB time-series connection
 
-Historical graphs showing hourly or daily variation
+---
 
-Color-coded alert zones (e.g., Green < 20°C, Yellow < 30°C, Red > 30°C)
+## 🔄 Data Flow Visualization
 
-Real-time data refresh using the InfluxDB time-series connection
+```mermaid
+flowchart LR
+    A[🏠 ESP32\n(Sensor Node)] -->|1️⃣ Reads & Formats Data| B[📶 Wi-Fi\n(Local Network)]
+    B -->|2️⃣ Transmits Data| C[🗄️ InfluxDB\n(AWS EC2)]
+    C -->|3️⃣ Provides Time-Series Data| D[📊 Grafana\n(AWS EC2)]
+    
+    style A fill:#90EE90,stroke:#2E8B57,stroke-width:2px,color:#000
+    style B fill:#ADD8E6,stroke:#4682B4,stroke-width:2px,color:#000
+    style C fill:#FFE4B5,stroke:#DAA520,stroke-width:2px,color:#000
+    style D fill:#FFB6C1,stroke:#C71585,stroke-width:2px,color:#000
+```
 
-🔄 Data Flow Summary
-Step	Component	Role	Location
-1	ESP32	Reads and formats sensor data	Physical device
-2	Wi-Fi	Transmits data to cloud	Local network
-3	InfluxDB	Stores time-stamped readings	AWS EC2
-4	Grafana	Displays live dashboards	AWS EC2
+---
 
-🧩 Key Features
-🌍 AWS-Hosted Cloud Deployment
+## 🧩 Key Features
 
-⚡ Real-time monitoring of environmental data
+* 🌍 **AWS-Hosted Cloud Deployment**
+* ⚡ Real-time monitoring of environmental data
+* 📈 Time-based trend visualization
+* 🔒 Secure and scalable architecture
+* 🧱 Modular system — easily extendable with more sensors
+* 🧠 Open-source and IoT-friendly design
 
-📈 Time-based trend visualization
+---
 
-🔒 Secure and scalable architecture
+## 🧾 License
 
-🧱 Modular system — easily extendable with more sensors
+This project is open-source and available under the **MIT License**.
 
-🧠 Open-source and IoT-friendly architecture
+---
 
-🖼️ System Architecture Diagram
+## 📬 Contact
 
-🧾 License
-This project is open-source and available under the MIT License.
-
-IoT | AI | Full Stack Developer
-🌍 Empowering data-driven environmental intelligence through IoT systems — deployed on AWS for real-world scalability.
-
-yaml
-Copy code
+🌐 [https://kmwhid.netlify.app/](https://kmwhid.netlify.app/)
