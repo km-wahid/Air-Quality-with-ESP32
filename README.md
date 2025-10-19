@@ -101,17 +101,20 @@ A Grafana dashboard can display:
 
 ## 🔄 Data Flow Visualization
 
-```mermaid
-flowchart LR
-    A[🏠 ESP32\n(Sensor Node)] -->|1️⃣ Reads & Formats Data| B[📶 Wi-Fi\n(Local Network)]
-    B -->|2️⃣ Transmits Data| C[🗄️ InfluxDB\n(AWS EC2)]
-    C -->|3️⃣ Provides Time-Series Data| D[📊 Grafana\n(AWS EC2)]
-    
-    style A fill:#90EE90,stroke:#2E8B57,stroke-width:2px,color:#000
-    style B fill:#ADD8E6,stroke:#4682B4,stroke-width:2px,color:#000
-    style C fill:#FFE4B5,stroke:#DAA520,stroke-width:2px,color:#000
-    style D fill:#FFB6C1,stroke:#C71585,stroke-width:2px,color:#000
-```
+
++-------------------+ +-------------------+ +-------------------+ +-------------------+
+| ESP32 Sensor Node | ---> | Wi-Fi Local Network| ---> | InfluxDB (AWS) | ---> | Grafana (AWS) |
+| Reads & formats | | Transmits Data | | Stores time-series| | Visualizes data |
+| sensor data | | | | data | | on dashboard |
++-------------------+ +-------------------+ +-------------------+ +-------------------+
+
+Step 1: ESP32 reads & formats sensor data
+|
+Step 2: Data sent over Wi-Fi
+|
+Step 3: InfluxDB stores the time-series data
+|
+Step 4: Grafana reads data and visualizes it on dashboards
 
 ---
 
