@@ -136,15 +136,6 @@ A Grafana dashboard can display:
 | **Backend** | Django (Python) |
 | **Cloud Platform** | AWS EC2 |
 
-### Languages
-
-- **Python:** 44.8%
-- **HTML:** 40.9%
-- **C++:** 11.3%
-- **Dockerfile:** 1.3%
-- **CSS:** 1.3%
-- **JavaScript:** 0.4%
-
 ---
 
 ## 📦 Installation & Setup
@@ -215,9 +206,6 @@ A Grafana dashboard can display:
 
 ---
 
-## 📸 Screenshots
-
-*Add your Grafana dashboard screenshots here*
 
 ---
 
